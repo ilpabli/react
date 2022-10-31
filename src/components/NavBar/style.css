@@ -1,0 +1,27 @@
+.navbar-container {
+  background-color: #9600ff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-titulo {
+  color: white;
+  margin-left: 50px;
+  font-size: 35px;
+}
+
+.navbar-menu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.navbar-menu-item {
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  color: white;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bolder;
+}
