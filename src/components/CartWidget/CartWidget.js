@@ -4,7 +4,7 @@ import "./style.css";
 const CartWidget = () => {
   return (
     <div className="navbar-carrito">
-      <img className="navbar-carrito__img" src={logo}></img>
+      <img className="navbar-carrito__img" src={logo} alt="carro" />
     </div>
   );
 };

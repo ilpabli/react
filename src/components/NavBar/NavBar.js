@@ -1,29 +1,45 @@
 import "../CartWidget/CartWidget";
 import CartWidget from "../CartWidget/CartWidget";
+import { Link } from "react-router-dom";
 import "./style.css";
 
 const NavBar = () => {
   return (
-    <div className="navbar-container">
-      <h1 className="navbar-titulo">Crossfit Total Ownage</h1>
+    <div className="navbar-container container-fluid">
+      <Link to="/">
+        <img
+          className="mt-2 mx-2"
+          src="/img/crossfit.png"
+          width="300"
+          height="78"
+          alt="crossfitlogo"
+        />
+      </Link>
       <ul className="navbar-menu">
         <li>
-          <a href="" className="navbar-menu-item">
-            Reservas
-          </a>
+          <Link className="navbar-menu-item" to="/">
+            Lista Completa
+          </Link>
         </li>
         <li>
-          <a href="" className="navbar-menu-item">
-            Nosotros
-          </a>
+          <Link className="navbar-menu-item" to="/disciplina/crossfit">
+            Crossfit
+          </Link>
         </li>
         <li>
-          <a href="" className="navbar-menu-item">
+          <Link className="navbar-menu-item" to="/disciplina/extras">
+            Extras
+          </Link>
+        </li>
+        <li>
+          <Link className="navbar-menu-item" to="/contacto">
             Contacto
-          </a>
+          </Link>
         </li>
       </ul>
-      <CartWidget />
+      <Link to="/cart">
+        <CartWidget />
+      </Link>
     </div>
   );
 };
