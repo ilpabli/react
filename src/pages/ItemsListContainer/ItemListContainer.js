@@ -1,30 +1,53 @@
 import { useEffect, useState } from "react";
 import ItemList from "../../components/ItemList/ItemList";
-import { data } from "../../data/data";
 import { useParams } from "react-router-dom";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 
 const ItemListContainer = () => {
   const [clase, setClase] = useState();
   // capturo con useParams las disciplinas que declare en mi APP.JS
   const { disciplinaNombre } = useParams();
-  // creo mi funcion para traerme la data emulando un servidor
-  const getData = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (disciplinaNombre) {
-        const filterDisciplina = data.filter((el) => {
-          return el.modo === disciplinaNombre;
+
+  const getData = () => {
+    const db = getFirestore();
+    const querySnapshot = collection(db, "clases");
+    if (disciplinaNombre) {
+      const queryFilter = query(
+        querySnapshot,
+        where("modo", "==", disciplinaNombre)
+      );
+      getDocs(queryFilter)
+        .then((response) => {
+          const data = response.docs.map((eL) => {
+            return { id: eL.id, ...eL.data() };
+          });
+          setClase(data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        resolve(filterDisciplina);
-      } else {
-        resolve(data);
-      }
-    }, 2000);
-  });
-  // uso el hook useEffect para lanzar la funcion getData y actualizar el state
+    } else {
+      getDocs(querySnapshot)
+        .then((response) => {
+          const data = response.docs.map((eL) => {
+            return { id: eL.id, ...eL.data() };
+          });
+          setClase(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   useEffect(() => {
-    getData
-      .then((response) => setClase(response))
-      .catch((error) => console.log(error));
+    getData();
     //eslint-disable-next-line
   }, [disciplinaNombre]);
   // envio a ItemList el array con los objetos por el medio de las props

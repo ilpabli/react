@@ -1,27 +1,29 @@
 import { useEffect, useState } from "react";
-import { data } from "../../data/data";
 import ItemDetail from "../../components/ItemDetail/ItemDetail";
 import { useParams } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 const ItemDetailContainer = () => {
   const [clase, setClase] = useState();
   const { id } = useParams();
-  const getClase = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const filterId = data.filter((el) => {
-        //eslint-disable-next-line
-        return el.id == id;
+
+  const getClase = () => {
+    const db = getFirestore();
+    const query = doc(db, "clases", id);
+    getDoc(query)
+      .then((response) => {
+        setClase({ id: response.id, ...response.data() });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      resolve(...filterId);
-    }, 2000);
-  });
+  };
+
   useEffect(() => {
-    getClase
-      .then((response) => setClase(response))
-      .catch((error) => console.log(error));
-    //eslint-disable-next-line
+    getClase();
+    // eslint-disable-next-line
   }, [id]);
   return (
     <>

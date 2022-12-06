@@ -1,5 +1,11 @@
+import ListCart from "../../components/ListCart/ListCart";
+
 const Cart = () => {
-  return <div>Hola soy un carrito VACIO</div>;
+  return (
+    <div>
+      <ListCart />
+    </div>
+  );
 };
 
 export default Cart;
